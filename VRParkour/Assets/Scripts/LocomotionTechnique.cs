@@ -28,54 +28,54 @@ public class LocomotionTechnique : MonoBehaviour
 
     void Update()
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Please implement your LOCOMOTION TECHNIQUE in this script :D.
-        leftTriggerValue = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, leftController); 
-        rightTriggerValue = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, rightController); 
+        // ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // // Please implement your LOCOMOTION TECHNIQUE in this script :D.
+        // leftTriggerValue = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, leftController); 
+        // rightTriggerValue = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, rightController); 
 
-        if (leftTriggerValue > 0.95f && rightTriggerValue > 0.95f)
-        {
-            if (!isIndexTriggerDown)
-            {
-                isIndexTriggerDown = true;
-                startPos = (OVRInput.GetLocalControllerPosition(leftController) + OVRInput.GetLocalControllerPosition(rightController)) / 2;
-            }
-            offset = hmd.transform.forward.normalized *
-                    ((OVRInput.GetLocalControllerPosition(leftController) - startPos) +
-                     (OVRInput.GetLocalControllerPosition(rightController) - startPos)).magnitude;
-            Debug.DrawRay(startPos, offset, Color.red, 0.2f);
-        }
-        else if (leftTriggerValue > 0.95f && rightTriggerValue < 0.95f)
-        {
-            if (!isIndexTriggerDown)
-            {
-                isIndexTriggerDown = true;
-                startPos = OVRInput.GetLocalControllerPosition(leftController);
-            }
-            offset = hmd.transform.forward.normalized *
-                     (OVRInput.GetLocalControllerPosition(leftController) - startPos).magnitude;
-            Debug.DrawRay(startPos, offset, Color.red, 0.2f);
-        }
-        else if (leftTriggerValue < 0.95f && rightTriggerValue > 0.95f)
-        {
-            if (!isIndexTriggerDown)
-            {
-                isIndexTriggerDown = true;
-                startPos = OVRInput.GetLocalControllerPosition(rightController);
-            }
-           offset = hmd.transform.forward.normalized *
-                    (OVRInput.GetLocalControllerPosition(rightController) - startPos).magnitude;
-            Debug.DrawRay(startPos, offset, Color.red, 0.2f);
-        }
-        else
-        {
-            if (isIndexTriggerDown)
-            {
-                isIndexTriggerDown = false;
-                offset = Vector3.zero;
-            }
-        }
-        this.transform.position = this.transform.position + (offset) * translationGain;
+        // if (leftTriggerValue > 0.95f && rightTriggerValue > 0.95f)
+        // {
+        //     if (!isIndexTriggerDown)
+        //     {
+        //         isIndexTriggerDown = true;
+        //         startPos = (OVRInput.GetLocalControllerPosition(leftController) + OVRInput.GetLocalControllerPosition(rightController)) / 2;
+        //     }
+        //     offset = hmd.transform.forward.normalized *
+        //             ((OVRInput.GetLocalControllerPosition(leftController) - startPos) +
+        //              (OVRInput.GetLocalControllerPosition(rightController) - startPos)).magnitude;
+        //     Debug.DrawRay(startPos, offset, Color.red, 0.2f);
+        // }
+        // else if (leftTriggerValue > 0.95f && rightTriggerValue < 0.95f)
+        // {
+        //     if (!isIndexTriggerDown)
+        //     {
+        //         isIndexTriggerDown = true;
+        //         startPos = OVRInput.GetLocalControllerPosition(leftController);
+        //     }
+        //     offset = hmd.transform.forward.normalized *
+        //              (OVRInput.GetLocalControllerPosition(leftController) - startPos).magnitude;
+        //     Debug.DrawRay(startPos, offset, Color.red, 0.2f);
+        // }
+        // else if (leftTriggerValue < 0.95f && rightTriggerValue > 0.95f)
+        // {
+        //     if (!isIndexTriggerDown)
+        //     {
+        //         isIndexTriggerDown = true;
+        //         startPos = OVRInput.GetLocalControllerPosition(rightController);
+        //     }
+        //    offset = hmd.transform.forward.normalized *
+        //             (OVRInput.GetLocalControllerPosition(rightController) - startPos).magnitude;
+        //     Debug.DrawRay(startPos, offset, Color.red, 0.2f);
+        // }
+        // else
+        // {
+        //     if (isIndexTriggerDown)
+        //     {
+        //         isIndexTriggerDown = false;
+        //         offset = Vector3.zero;
+        //     }
+        // }
+        // this.transform.position = this.transform.position + (offset) * translationGain;
 
 
         ////////////////////////////////////////////////////////////////////////////////
