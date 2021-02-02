@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+
 
 public class LocomotionTechnique : MonoBehaviour
 {
@@ -15,68 +17,54 @@ public class LocomotionTechnique : MonoBehaviour
     [SerializeField] private Vector3 offset;
     [SerializeField] private bool isIndexTriggerDown;
 
+    public GameObject ObjectToMove;
+    private Rigidbody objectRb;
+
+
+    public GameObject steering_wheel;
+    public GameObject throttle_lever;
+
 
     /////////////////////////////////////////////////////////
     // These are for the game mechanism.
     public ParkourCounter parkourCounter;
     public string stage;
+
+    private float previousWheelAngle;
     
     void Start()
     {
-        
+        objectRb = ObjectToMove.GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-        // ////////////////////////////////////////////////////////////////////////////////////////////////////
-        // // Please implement your LOCOMOTION TECHNIQUE in this script :D.
-        // leftTriggerValue = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, leftController); 
-        // rightTriggerValue = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, rightController); 
+        float wheelAngle= steering_wheel.transform.localEulerAngles.z;
+        float leverAngle = throttle_lever.transform.localEulerAngles.x;
 
-        // if (leftTriggerValue > 0.95f && rightTriggerValue > 0.95f)
-        // {
-        //     if (!isIndexTriggerDown)
-        //     {
-        //         isIndexTriggerDown = true;
-        //         startPos = (OVRInput.GetLocalControllerPosition(leftController) + OVRInput.GetLocalControllerPosition(rightController)) / 2;
-        //     }
-        //     offset = hmd.transform.forward.normalized *
-        //             ((OVRInput.GetLocalControllerPosition(leftController) - startPos) +
-        //              (OVRInput.GetLocalControllerPosition(rightController) - startPos)).magnitude;
-        //     Debug.DrawRay(startPos, offset, Color.red, 0.2f);
-        // }
-        // else if (leftTriggerValue > 0.95f && rightTriggerValue < 0.95f)
-        // {
-        //     if (!isIndexTriggerDown)
-        //     {
-        //         isIndexTriggerDown = true;
-        //         startPos = OVRInput.GetLocalControllerPosition(leftController);
-        //     }
-        //     offset = hmd.transform.forward.normalized *
-        //              (OVRInput.GetLocalControllerPosition(leftController) - startPos).magnitude;
-        //     Debug.DrawRay(startPos, offset, Color.red, 0.2f);
-        // }
-        // else if (leftTriggerValue < 0.95f && rightTriggerValue > 0.95f)
-        // {
-        //     if (!isIndexTriggerDown)
-        //     {
-        //         isIndexTriggerDown = true;
-        //         startPos = OVRInput.GetLocalControllerPosition(rightController);
-        //     }
-        //    offset = hmd.transform.forward.normalized *
-        //             (OVRInput.GetLocalControllerPosition(rightController) - startPos).magnitude;
-        //     Debug.DrawRay(startPos, offset, Color.red, 0.2f);
-        // }
-        // else
-        // {
-        //     if (isIndexTriggerDown)
-        //     {
-        //         isIndexTriggerDown = false;
-        //         offset = Vector3.zero;
-        //     }
-        // }
-        // this.transform.position = this.transform.position + (offset) * translationGain;
+        if (leverAngle >=340.0f){
+            leverAngle = leverAngle -360.0f ;
+        }
+        if (wheelAngle >180.0f){
+            wheelAngle = wheelAngle -360.0f ;
+        }
+        
 
+        //Define speed
+        float speed = speedFromAngle(leverAngle);
+        
+        //Add Rotation
+        if(speed !=0){
+            Quaternion deltaRotation = Quaternion.Euler(new Vector3(0, - wheelAngle/50.0f, 0));
+            objectRb.MoveRotation(objectRb.rotation * deltaRotation);
+        }
+
+        //Add moving force
+        Vector3 forward = Vector3.Scale(new Vector3(1,0,1), ObjectToMove.transform.forward);
+        objectRb.AddForce(forward * speed, ForceMode.Force);
+
+        
+        
 
         ////////////////////////////////////////////////////////////////////////////////
         // These are for the game mechanism.
@@ -106,5 +94,21 @@ public class LocomotionTechnique : MonoBehaviour
         }
         // These are for the game mechanism.
 
+    }
+    float speedFromAngle(float angle){
+        if(angle <=-10){
+            return (angle+10.0f)*1000.0f;
+        }
+        else if (angle <=0){
+            return (angle+10.0f)*5.0f;
+        }
+        return (15.0f*angle +1.0f)*50.0f;
+        
+    }
+    
+    Vector3 computeForce(float angle,float speed){
+        //Computes the force to apply to the boat from the rotation angle around y 
+        float angleInRadian = angle *3.14f /180.0f;
+        return speed* new Vector3(Mathf.Abs(Mathf.Sin(angleInRadian)),0.0f,Mathf.Abs(Mathf.Cos(angleInRadian)));
     }
 }

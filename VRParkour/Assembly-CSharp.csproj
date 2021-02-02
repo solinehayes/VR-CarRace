@@ -210,8 +210,10 @@
      <Compile Include="Assets\Oculus\Spatializer\scripts\OculusSpatializerUnity.cs" />
      <Compile Include="Assets\Oculus\Spatializer\scripts\helpers\ONSPReflectionZone.cs" />
      <Compile Include="Assets\Scripts\CoinRotator.cs" />
+     <Compile Include="Assets\Scripts\GearController.cs" />
      <Compile Include="Assets\Scripts\LocomotionTechnique.cs" />
      <Compile Include="Assets\Scripts\ParkourCounter.cs" />
+     <Compile Include="Assets\Scripts\SteeringWheelController.cs" />
      <Compile Include="Assets\UnityAssets\AurynSky\Forest Pack\Scripts\ChestDemo.cs" />
      <Compile Include="Assets\UnityAssets\AurynSky\Forest Pack\Scripts\MaterialMover.cs" />
      <Compile Include="Assets\UnityAssets\AurynSky\Forest Pack\Scripts\Rotator.cs" />
@@ -275,6 +277,7 @@
      <None Include="Assets\Oculus\SampleFramework\Core\CustomHands\Materials\Hands_DiffBump.shader" />
      <None Include="Assets\Oculus\Avatar\Resources\Materials\Expressive\Avatar_Mobile_SingleComponentExpressive.shader" />
      <None Include="Assets\GingerVR-master\SicknessReductionTechniques\DynamicFOV\CircleEffect.shader" />
+     <None Include="Assets\VRInteractions\ReadMe.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
      <None Include="Assets\Oculus\SampleFramework\license.txt" />
     <Reference Include="UnityEngine">
