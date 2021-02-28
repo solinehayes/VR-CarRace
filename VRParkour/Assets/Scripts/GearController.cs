@@ -10,8 +10,6 @@ public class GearController : MonoBehaviour
     [SerializeField] private bool isInCollider;
     [SerializeField] private bool isSelected;
 
-    public TMP_Text debugText;
-
     public OVRInput.Controller controller;
     public GameObject gearObject;
     public GameObject boat;
